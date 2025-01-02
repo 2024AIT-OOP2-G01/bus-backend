@@ -1,2 +1,3 @@
+from .internal_route import in_route_bp
 # Blueprintをリストとしてまとめる
-blueprints = []
+blueprints = [in_route_bp]
