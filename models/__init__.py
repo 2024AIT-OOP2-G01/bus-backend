@@ -14,23 +14,29 @@ def initialize_locations():
     Location.delete().execute()
     
     locations_data = [
-        {'location_name': 'バス停'},#1
-        {'location_name': '共通P'},#2
-        {'location_name': '1号館'},#3
-        {'location_name': '10号館'},#4
-        {'location_name': '14号館'},#5
-        {'location_name': '10号館大講義室棟'},#6
-        {'location_name': '旧1号館'},#7
-        {'location_name': '9号館'},#8
-        {'location_name': '7号館'},#9
-        {'location_name': '第1本部棟'},#10
-        {'location_name': '第2本部棟'},#11
-        {'location_name': '愛和会館'},#12
-        {'location_name': '土木・建築実験棟'},#13
-        {'location_name': '図書館'},#14
-        {'location_name': '12号館'},#15
-        {'location_name': '2号館'},#16
+        {'location_name': 'バス停', 'latitude': 35.18233580606756, 'longitude': 137.1099265887362},  #1
+        {'location_name': '共通P', 'latitude': 35.18364017243178, 'longitude': 137.11090827724146},  #2
+        {'location_name': '1号館', 'latitude': 35.18390542756324, 'longitude': 137.11124355336062},  #3
+        {'location_name': '10号館', 'latitude': 35.184186027090554, 'longitude': 137.11097265025634},  #4
+        {'location_name': '14号館', 'latitude': 35.18444755306055, 'longitude': 137.11130383998838},  #5
+        {'location_name': '10号館大講義室棟', 'latitude': 35.18454395645997, 'longitude': 137.11164231490918},  #6
+        {'location_name': '旧1号館', 'latitude': 35.18476191155015, 'longitude': 137.11151282260994},  #7
+        {'location_name': '9号館', 'latitude': 35.18467577053099, 'longitude': 137.11248810598033},  #8
+        {'location_name': '7号館', 'latitude': 35.18355242335979, 'longitude': 137.11183651330035},  #9
+        {'location_name': '第1本部棟', 'latitude': 35.18358570794326, 'longitude': 137.11242192860885},  #10
+        {'location_name': '第2本部棟', 'latitude': 35.18425971783185, 'longitude': 137.1123532059479},  #11
+        {'location_name': 'AITプラザ', 'latitude': 35.184278440253266, 'longitude': 137.1118212416126},  #12
+        {'location_name': '愛和会館', 'latitude': 35.18413282133835, 'longitude': 137.11294880241238},  #13
+        {'location_name': '土木・建築実験棟', 'latitude': 35.18364811650855, 'longitude': 137.11285717219016},  #14
+        {'location_name': '図書館', 'latitude': 35.183760451790825, 'longitude': 137.1134349516468},  #15
+        {'location_name': '12号館', 'latitude': 35.18377085319801, 'longitude': 137.11344258749864},  #16
+        {'location_name': '2号館', 'latitude': 35.18382702077372, 'longitude': 137.11411963302933},  #17
     ]
+    
+    # データベースを再作成
+    db.drop_tables([Location])
+    db.create_tables([Location])
+    
     for data in locations_data:
         Location.create(**data)
 
@@ -39,35 +45,53 @@ def initialize_connections():
     Connection.delete().execute()
     
     connections_data = [
-        # 1号館、10号館、14号館あたり
-        # 計測済み バス停からPまで
+        # バス停 ←→ 共通P
         {'from_location': 1, 'to_location': 2, 'travel_time': 130},
 
-        # 1号館からPまでと1号館まで
+        # 共通P ←→ 1号館
         {'from_location': 2, 'to_location': 3, 'travel_time': 30},
+        
+        # 1号館 ←→ 10号館
         {'from_location': 3, 'to_location': 4, 'travel_time': 20},
+        
+        # 10号館 ←→ 14号館
         {'from_location': 4, 'to_location': 5, 'travel_time': 20},
 
-        # ここから未計測
+        # 10号館大講義室棟 ←→ 10号館
         {'from_location': 6, 'to_location': 4, 'travel_time': 20},
 
-        # 1号館の北の方
+        # 旧1号館 ←→ 1号館
         {'from_location': 7, 'to_location': 3, 'travel_time': 60},
+        
+        # 9号館 ←→ 旧1号館
         {'from_location': 8, 'to_location': 7, 'travel_time': 20},
 
-        # 7号館（ルートわからんので適当）
+        # 7号館 ←→ 1号館
         {'from_location': 9, 'to_location': 3, 'travel_time': 140},
 
-        # 本部棟からPまで
+        # 第1本部棟 ←→ 共通P
         {'from_location': 10, 'to_location': 2, 'travel_time': 60},
+        
+        # 第2本部棟 ←→ 共通P
         {'from_location': 11, 'to_location': 2, 'travel_time': 80},
-        {'from_location': 14, 'to_location': 2, 'travel_time': 90},
+        
+        # 土木・建築実験棟 ←→ 共通P
+        {'from_location': 14, 'to_location': 2, 'travel_time': 140},
 
-        {'from_location': 12, 'to_location': 2, 'travel_time': 120},
-        {'from_location': 13, 'to_location': 2, 'travel_time': 180},
+        # AITプラザ ←→ 共通P
+        {'from_location': 12, 'to_location': 2, 'travel_time': 60},
+        
+        # 愛和会館 ←→ 共通P
+        {'from_location': 13, 'to_location': 2, 'travel_time': 80},
 
-        {'from_location': 15, 'to_location': 2, 'travel_time': 210},
-        {'from_location': 16, 'to_location': 2, 'travel_time': 230},
+        # 図書館 ←→ 共通P
+        {'from_location': 15, 'to_location': 2, 'travel_time': 120},
+        
+        # 12号館 ←→ 共通P
+        {'from_location': 16, 'to_location': 2, 'travel_time': 160},
+
+        # 2号館 ←→ 共通P
+        {'from_location': 17, 'to_location': 2, 'travel_time': 180},
     ]
     for data in connections_data:
         Connection.create(**data)
@@ -172,6 +196,7 @@ def initialize_routes():
     create_route(14, 1)
     create_route(15, 1)
     create_route(16, 1)
+    create_route(17, 1)
 
 # データベースの初期化関数
 def initialize_database():
