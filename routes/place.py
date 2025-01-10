@@ -25,7 +25,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     
     return R * c
 
-@place_bp.route('/')
+@place_bp.route('/', methods=['GET'])
 def index():
     lat = request.args.get('lat')
     lon = request.args.get('lon')
