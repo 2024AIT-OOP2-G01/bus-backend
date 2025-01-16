@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify   
+from flask import Blueprint, jsonify,request
 from datetime import datetime
 # Blueprint の初期化
 yakusa_to_okazaki_bp = Blueprint('yakusa_to_okazaki', __name__)
@@ -28,7 +28,14 @@ def get_next_time():
     """
     APIエンドポイント:最も近い時刻を取得
     """
-    train_time = datetime.strptime("time", "%H:%M") # timeに現在時刻にバスの時間を足した値をいれたらギリギリ乗れる電車がわかるはず
+    # クエリパラメータで 'current_time' を受け取る
+    time_str = request.args.get('current_time', None)
+    
+    if time_str is None:
+        return jsonify({"message": "No current time provided."}), 400
+
+    train_time = datetime.strptime(time_str, "%H:%M") # time_strに現在時刻にバスの時間を足した値をいれたらギリギリ乗れる電車がわかるはず
+
     today = train_time.date()  # 今日の日付
 
     # 時刻表を datetime オブジェクトに変換
