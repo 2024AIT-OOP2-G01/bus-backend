@@ -5,7 +5,7 @@ from models.connection import Connection
 
 in_route_bp = Blueprint('in_route', __name__, url_prefix='/internal')
 
-@in_route_bp.route('/')
+@in_route_bp.route('/', methods=['GET'])
 def index():
     start_location_id = request.args.get('from')
     end_location_id = request.args.get('to')

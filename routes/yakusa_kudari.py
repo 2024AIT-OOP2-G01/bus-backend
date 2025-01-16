@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify   
+from flask import Blueprint, jsonify, request
 from datetime import datetime
 
 # Blueprint の初期化
@@ -15,7 +15,6 @@ yakusa_to_kouzouzi_timetable = [
     "19:21", "19:37", "19:53", "20:09", "20:25", "20:41", "20:57",
     "21:13", "21:29", "21:45", "22:01", "22:23", "22:39", "22:56",
     "23:21", "23:40",
-    
 ]
 # エンドポイント定義
 @yakusa_to_kouzouzi_bp.route('/api/aikann/yakusa_to_kouzouzi', methods=['GET'])
@@ -24,12 +23,14 @@ def get_yakusa_to_kouzouzi_timetable():
     APIエンドポイント: 八草の時刻表を取得
     """
     return jsonify(yakusa_to_kouzouzi_timetable)
+
 @yakusa_to_kouzouzi_bp.route('/api/aikann/yakusa_to_kouzouzi/next', methods=['GET'])
 def get_next_time():
     """
     APIエンドポイント: 現在時刻より後の八草の最も近い時刻を取得
     """
-    train_time = datetime.strptime("time", "%H:%M")  # timeに現在時刻にバスの時間を足した値をいれたらギリギリ乗れる電車がわかるはず
+    time = request.args.get("time")
+    train_time = datetime.strptime(time, "%H:%M")  # timeに現在時刻にバスの時間を足した値をいれたらギリギリ乗れる電車がわかるはず
     today = train_time.date()  # 今日の日付
 
     # 時刻表を datetime オブジェクトに変換
@@ -47,6 +48,18 @@ def get_next_time():
 
     # 最も近い時刻を取得
     next_time = min(future_times, key=lambda t: t - train_time)
+        
+    # future_timesから次の時刻を削除
+    future_times.remove(next_time)
+
+    next_times = []
+
+    # 次の3つの時刻を取得
+    for i in range(3):
+        if future_times:
+            a = min(future_times, key=lambda t: t - train_time)
+            next_times.append(a.strftime("%H:%M"))
+            future_times.remove(a)
 
     # 結果をフォーマットして返す
-    return jsonify({"next_time": next_time.strftime("%H:%M")})
+    return jsonify({"next_time": next_time.strftime("%H:%M"), "next_times": next_times})
