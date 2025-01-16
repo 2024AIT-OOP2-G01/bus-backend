@@ -1,5 +1,6 @@
-from flask import Blueprint, jsonify,request
+from flask import Blueprint, jsonify, request   
 from datetime import datetime
+
 # Blueprint の初期化
 yakusa_to_okazaki_bp = Blueprint('yakusa_to_okazaki', __name__)
 # 八草の時刻データ
@@ -28,6 +29,7 @@ def get_next_time():
     """
     APIエンドポイント:最も近い時刻を取得
     """
+
     # クエリパラメータで 'current_time' を受け取る
     time_str = request.args.get('current_time', None)
     
@@ -53,6 +55,18 @@ def get_next_time():
 
     # 最も近い時刻を取得
     next_time = min(future_times, key=lambda t: t - train_time)
+    
+    # future_timesから次の時刻を削除
+    future_times.remove(next_time)
+
+    next_times = []
+
+    # 次の3つの時刻を取得
+    for i in range(3):
+        if future_times:
+            a = min(future_times, key=lambda t: t - train_time)
+            next_times.append(a.strftime("%H:%M"))
+            future_times.remove(a)
 
     # 結果をフォーマットして返す
-    return jsonify({"next_time": next_time.strftime("%H:%M")})
+    return jsonify({"next_time": next_time.strftime("%H:%M"), "next_times": next_times})
