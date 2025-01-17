@@ -1,5 +1,6 @@
 from flask import Flask, render_template
 from flask_cors import CORS
+from waitress import serve
 from models import initialize_database
 from routes import blueprints
 
@@ -21,4 +22,4 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(port=9999)
+    serve(app, host='0.0.0.0', port=9999)
