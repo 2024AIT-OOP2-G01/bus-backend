@@ -24,11 +24,11 @@
 
 <br />
 <div align="right">
-    <a href="READMEの作成方法のリンク"><strong>フロントエンドのリポジトリ »</strong></a>
+    <a href="https://github.com/2024AIT-OOP2-G01/bus-frontend"><strong>フロントエンドのリポジトリ »</strong></a>
 </div>
 <br />
 <div align="right">
-    <a href="Dockerfileの詳細リンク"><strong>バックエンドのリポジトリ »</strong></a>
+    <a href="https://github.com/2024AIT-OOP2-G01/bus-backend"><strong>バックエンドのリポジトリ »</strong></a>
 </div>
 <br />
 
