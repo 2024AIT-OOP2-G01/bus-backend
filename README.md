@@ -31,6 +31,10 @@
     <a href="https://github.com/2024AIT-OOP2-G01/bus-backend"><strong>バックエンドのリポジトリ »</strong></a>
 </div>
 <br />
+<div align="right">
+    <a href="https://github.com/2024AIT-OOP2-G01/bus-timecalc/tree/main"><strong>計算関係のリポジトリ »</strong></a>
+</div>
+<br />
 
 ## プロジェクト名
 
