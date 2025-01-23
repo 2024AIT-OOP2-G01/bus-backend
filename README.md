@@ -40,6 +40,8 @@
 
 [ギリ間に合うナビ](https://girimaniau.vercel.app/)
 
+[プレゼンシート](https://www.canva.com/design/DAGcVM__sY0/gIzU1mzX6mKDp46_EtdA0A/view?utm_content=DAGcVM__sY0&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=ha8a2e16a01)
+
 <!-- プロジェクトについて -->
 
 ## プロジェクトについて
